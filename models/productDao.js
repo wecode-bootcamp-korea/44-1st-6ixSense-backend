@@ -4,10 +4,12 @@ const productList = async () => {
   try {
     const productList = await appDataSource.query(
       `SELECT
-      gift,
-      incense,
-      corn,
-      holder
+      products.name,
+      products.price
+
+    
+      
+      
       `
     );
     return productList;
