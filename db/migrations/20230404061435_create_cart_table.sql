@@ -1,5 +1,5 @@
 -- migrate:up
-CREATE TABLE cart
+CREATE TABLE carts
 (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
@@ -10,4 +10,4 @@ CREATE TABLE cart
 );
 
 -- migrate:down
-DROP TABLE cart;
+DROP TABLE carts;
