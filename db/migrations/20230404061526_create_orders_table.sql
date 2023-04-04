@@ -13,4 +13,4 @@ CREATE TABLE orders
 );
 
 -- migrate:down
-DROP TABLE oreders;
+DROP TABLE orders;

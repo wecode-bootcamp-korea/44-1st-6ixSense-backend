@@ -9,7 +9,7 @@ CREATE TABLE products
   detail_image VARCHAR(2000) NULL,
   discount_rate DECIMAL(6, 5) NOT NULL DEFAULT 0,
   category_id INT NOT NULL, 
-  incenses_id INT NOT NULL,
+  incenses_id INT  NULL,
   FOREIGN KEY(category_id) REFERENCES categories(id),
   FOREIGN KEY(incenses_id) REFERENCES incenses(id) 
 );
