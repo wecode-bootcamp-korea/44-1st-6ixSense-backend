@@ -5,13 +5,11 @@ CREATE TABLE orders
   user_id INT NOT NULL,
   order_number VARCHAR(50) DEFAULT(UUID()),
   status_id INT NOT NULL,
-  item_id INT NOT NULL,
   total_price DECIMAL(10,3) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(status_id) REFERENCES order_status(id),
-  FOREIGN KEY(item_id) REFERENCES order_items(id)
+  FOREIGN KEY(status_id) REFERENCES order_status(id)
 );
 
 -- migrate:down
