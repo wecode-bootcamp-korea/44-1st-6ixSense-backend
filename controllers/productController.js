@@ -1,14 +1,11 @@
 const productService = require('../services/productServices');
+const { catchAsync } = require('../utils/error');
 
-const productList = async (req, res) => {
-  try {
-    const get = await productService.productList();
-    return res.status(200).json({ get });
-  } catch (err) {
-    console.log(err);
-    return res.status(err.statusCode || 400).json({ message: err.message });
-  }
-};
+const productList = catchAsync(async (req, res) => {
+  const { categoriesId } = req.query;
+  const products = await productService.productList(categoriesId);
+  return res.status(200).json({ data: products });
+});
 
 module.exports = {
   productList,
