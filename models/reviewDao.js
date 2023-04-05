@@ -8,7 +8,8 @@ const reviews = async () => {
               reviews.title,
               reviews.content,
               reviews.user_id AS userId,
-              reviews.product_id AS productId
+              reviews.product_id AS productId,
+              reviews.score
         FROM reviews`
     );
   } catch (err) {
