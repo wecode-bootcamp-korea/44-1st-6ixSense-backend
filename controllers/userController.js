@@ -1,11 +1,13 @@
 const userService = require('../services/userService');
-const { catchAsync, baseError } = require('../utils/error');
+const { catchAsync } = require('../utils/error');
 
 const signIn = catchAsync(async (req, res) => {
   const { account, password } = req.body;
 
   if (!account || !password) {
-    throw new baseError('KEY_ERROR', 400);
+    const error = new Error('KEY_ERROR');
+    error.statusCode = 400;
+    throw error;
   }
 
   const accessToken = await userService.signIn(account, password);
