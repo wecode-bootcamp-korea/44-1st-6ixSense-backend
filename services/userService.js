@@ -9,16 +9,17 @@ const getUserByAccount = async (account) => {
 
 const signIn = async (account, password) => {
   const user = await userDao.getUserByAccount(account);
+
   if (!user) {
-    throw new baseError('USER_NOT_VALID');
+    throw new baseError('USER_NOT_VALID', 401);
   }
 
   const checkHash = await bcrypt.compare(password, user.password);
 
   if (!checkHash) {
-    throw new baseError('PASSWORD_NOT_MATCH', 401);
+    throw new baseError('USER_NOT_VALID', 401);
   }
-  const payLoad = { account: account, id: user.id };
+  const payLoad = { id: user.id };
   const secretKey = process.env.SECRET_KEY;
   const accessToken = jwt.sign(payLoad, secretKey);
   return accessToken;
