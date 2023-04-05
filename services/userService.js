@@ -9,6 +9,7 @@ const signUp = async (name, account, password, phoneNumber, birthday, gender) =>
   if (!accountRegex.test(account)) {
     throw new baseError('ACCOUNT_NOT_VALID', 409);
   }
+
   if (!passwordRegex.test(password)) {
     throw new baseError('PASSWORD_NOT_VALID', 409);
   }
