@@ -1,5 +1,4 @@
 const appDataSource = require('./appDataSource');
-const { baseError } = require('../utils/error');
 
 const createUser = async (name, account, hashedPassword, phoneNumber, birthday, gender) => {
   try {
@@ -8,14 +7,16 @@ const createUser = async (name, account, hashedPassword, phoneNumber, birthday, 
             name,
             account,
             password,
-            phone_number,
+            phone_number, 
             birthday,
             gender
         ) VALUES (?,?,?,?,?,?)`,
       [name, account, hashedPassword, phoneNumber, birthday, gender]
     );
   } catch (err) {
-    throw new baseError('appDataSource_Error', 400);
+    const error = new Error('appDataSource_Error');
+    error.statusCode = 400;
+    throw error;
   }
 };
 

@@ -11,7 +11,9 @@ const signUp = async (name, account, password, phoneNumber, birthday, gender) =>
   }
 
   if (!passwordRegex.test(password)) {
-    throw new baseError('PASSWORD_NOT_VALID', 409);
+    const error = new Error('PASSWORD_NOT_VALID');
+    error.statusCode = 400;
+    throw error;
   }
 
   const saltRounds = 12;

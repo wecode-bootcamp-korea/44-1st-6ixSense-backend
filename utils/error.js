@@ -1,11 +1,3 @@
-class baseError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.message = message;
-    this.statusCode = statusCode;
-  }
-}
-
 const catchAsync = (func) => {
   return (req, res, next) => {
     func(req, res, next).catch((error) => next(error));
@@ -20,4 +12,4 @@ const globalErrorHandler = (err, req, res, next) => {
   res.status(err.statusCode).json({ message: err.message });
 };
 
-module.exports = { catchAsync, globalErrorHandler, baseError };
+module.exports = { catchAsync, globalErrorHandler };
