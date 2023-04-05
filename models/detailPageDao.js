@@ -8,13 +8,13 @@ const getProduct = async (productId) => {
             products.price,
             products.description,
             products.stock,
-            products.detail_image,
-            products.discount_rate,
+            products.detail_image AS detailImage,
+            products.discount_rate AS discountRate,
             
             CASE
                 WHEN products.discount_rate > 0 THEN products.price * (1 - products.discount_rate)
                 ELSE products.price
-            END AS discounted_price
+            END AS discountedPrice
       FROM products
       WHERE products.id = ?
               `,
