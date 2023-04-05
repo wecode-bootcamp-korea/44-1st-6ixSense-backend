@@ -18,7 +18,9 @@ const getUserByAccount = async (account) => {
     );
     return result;
   } catch (err) {
-    throw new baseError('appDataSource_Error', 400);
+    const error = new Error('dataSource Error');
+    error.statusCode = 400;
+    throw error;
   }
 };
 
