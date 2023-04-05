@@ -1,5 +1,4 @@
 const appDataSource = require('./appDataSource');
-const { baseError } = require('../utils/error');
 
 const getUserByAccount = async (account) => {
   try {
