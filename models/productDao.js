@@ -1,58 +1,46 @@
 const appDataSource = require('./appDataSource');
 
-const productListOther = async (first, last) => {
+const productList = async (categoryId, sort, limit, offset) => {
   try {
-    const productListOther = await appDataSource.query(
-      `SELECT
-      products.name as productName,
-      products.price,
-      products.description,
-      products.discount_rate as discountRate, 
-      products.category_id as categoryId,
-      categories.name,
-      categories.id
-      FROM categories
-      JOIN products ON categories.id = products.category_id
-      JOIN product_images ON products.id = product_images.product_id
-      LIMIT ?, ?
-      `,
-      [first, last]
-    );
-    return productListOther;
-  } catch (err) {
-    console.log(err);
-    const error = new Error('INVALID_DATA_SELECT');
-    error.statusCode = 400;
-    throw error;
-  }
-};
+    let whereCondition = '';
 
-const productList = async (categoryId, first, last) => {
-  try {
+    if (categoryId) {
+      whereCondition = `WHERE products.id IN (${categoryId})`;
+    }
+    const sortList = {
+      priceInASC: 'products.price ASC',
+      priceInDESC: 'products.price DESC',
+    };
+    const sortCondition = sortList[sort] || 'products.id';
+
     const productList = await appDataSource.query(
       `SELECT
-      products.name as productName,
-      products.price,
-      products.description,
-      products.discount_rate as discountRate, 
-      products.category_id as categoryId,
-      categories.name,
-      categories.id,
-      JSON_ARRAYAGG(
-      product_images.image_url) as productImage,
-      product_images.product_id as productId,
-      CASE
-      WHEN products.discount_rate > 0
-      THEN products.price * (1 - products.discount_rate)
-      ELSE products.price END AS discountedPrice
-      FROM categories
-      JOIN products ON categories.id = products.category_id
-      JOIN product_images ON products.id = product_images.product_id
-      WHERE categories.id IN (?) 
-      GROUP BY products.id
-      LIMIT ?, ?
+        products.name as productName,
+        products.price,
+        products.description,
+        products.discount_rate as discountRate, 
+        products.category_id as categoryId,
+        categories.name,
+        categories.id,
+        incenses.id,
+        incenses.name,
+        JSON_ARRAYAGG(
+          product_images.image_url) as productImage,
+          product_images.product_id as productId,
+        CASE
+          WHEN products.discount_rate > 0
+          THEN products.price * (1 - products.discount_rate)
+          ELSE products.price END AS discountedPrice
+        FROM categories
+        JOIN products ON categories.id = products.category_id
+        JOIN product_images ON products.id = product_images.product_id
+        JOIN incenses ON products.incenses_id = incenses.id
+        ${whereCondition}
+        GROUP BY products.id
+        ORDER BY ${sortCondition}
+        LIMIT ? OFFSET ?
       `,
-      [categoryId, first, last]
+      [limit, offset]
     );
     return productList;
   } catch (err) {
@@ -65,5 +53,4 @@ const productList = async (categoryId, first, last) => {
 
 module.exports = {
   productList,
-  productListOther,
 };
