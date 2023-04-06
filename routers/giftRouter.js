@@ -1,9 +1,9 @@
 const express = require('express');
-const productController = require('../controllers/productController');
+const giftController = require('../controllers/giftController');
 
 const router = express.Router();
 
-router.get('/giftproduct', productController.giftproduct);
+router.get('/giftproduct', giftController.giftProduct);
 
 module.exports = {
   router,

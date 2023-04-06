@@ -1,9 +1,10 @@
-const productService = require('../services/productService');
+const productService = require('../services/productServices');
+const { catchAsync } = require('../utils/error');
 
 const giftProduct = catchAsync(async (req, res) => {
-  const { gift } = req.query;
-  const giftProuduct = await productService.giftProduct(gift);
-  return res.status(200).json({ data: giftProuduct });
+  const { categoryId } = req.query;
+  const gift = await productService.productList(categoryId);
+  return res.status(200).json({ data: gift });
 });
 
 module.exports = {
