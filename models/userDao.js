@@ -1,18 +1,21 @@
 const appDataSource = require('./appDataSource');
 
-const createUser = async (name, account, hashedPassword, phoneNumber, birthday, gender) => {
+const getUserByAccount = async (account) => {
   try {
-    return await appDataSource.query(
-      `INSERT INTO users(
-            name,
-            account,
-            password,
-            phone_number, 
-            birthday,
-            gender
-        ) VALUES (?,?,?,?,?,?)`,
-      [name, account, hashedPassword, phoneNumber, birthday, gender]
+    const [result] = await appDataSource.query(
+      `SELECT 
+      id,
+      name,
+      account,
+      password,
+      phone_number,
+      birthday,
+      gender,
+      point
+      FROM users WHERE account = ?`,
+      [account]
     );
+    return result;
   } catch (err) {
     const error = new Error('appDataSource_Error');
     error.statusCode = 400;
@@ -20,4 +23,4 @@ const createUser = async (name, account, hashedPassword, phoneNumber, birthday, 
   }
 };
 
-module.exports = { createUser };
+module.exports = { getUserByAccount };
