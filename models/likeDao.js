@@ -17,14 +17,22 @@ const likes = async (userId, productId) => {
   }
 };
 
-const likesCensel = async (userId, productId) => {
+const likesCensel = async (userId) => {
   try {
     return appDataSource.query(
-      ``
-    )
+      `DELETE FROM likes
+      WHERE likes.user_id = ?`,
+      [userId]
+    );
+  } catch (err) {
+    console.log(err);
+    const error = new Error('INVALID_DATA_INPUT');
+    error.statusCode = 400;
+    throw error;
   }
-}
+};
 
 module.exports = {
   likes,
+  likesCensel,
 };
