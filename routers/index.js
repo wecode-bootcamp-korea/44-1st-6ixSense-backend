@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const detailPageRouter = require('./detailPageRouter');
+const productRouter = require('./productRouter');
 
-router.use('/detailpage', detailPageRouter.router);
+router.use('/detailpage', productRouter.router);
 
 module.exports = router;
