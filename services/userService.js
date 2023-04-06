@@ -6,6 +6,10 @@ const getUserByAccount = async (account) => {
   return await userDao.getUserByAccount(account);
 };
 
+const getUserById = async (userId) => {
+  return await userDao.getUserById(userId);
+};
+
 const signIn = async (account, password) => {
   const user = await userDao.getUserByAccount(account);
 
@@ -28,4 +32,4 @@ const signIn = async (account, password) => {
   return accessToken;
 };
 
-module.exports = { getUserByAccount, signIn };
+module.exports = { getUserByAccount, getUserById, signIn };
