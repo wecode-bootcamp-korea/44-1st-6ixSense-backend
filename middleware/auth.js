@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const userService = require('../services/userService');
 
 const checkLogInToken = async (req, res, next) => {
   try {
@@ -14,11 +15,19 @@ const checkLogInToken = async (req, res, next) => {
 
     const decoded = jwt.verify(accessToken, secretKey);
 
-    req.user = await decoded.id;
+    const user = await userService.getUserById(decoded.id);
+
+    if (!user) {
+      const error = new Error('USER_DOES_NOT_EXIST');
+      error.statusCode = 404;
+
+      return res.status(error.statusCode).json({ message: error.message });
+    }
+    req.userId = await decoded.id;
 
     next();
   } catch (err) {
-    return res.status(403).json({
+    return res.status(401).json({
       message: 'INVALID_TOKEN',
     });
   }
