@@ -3,7 +3,8 @@ const appDataSource = require('./appDataSource');
 const getProduct = async (productId) => {
   try {
     return await appDataSource.query(
-      `SELECT 
+      `SELECT
+            products.id, 
             products.name,
             products.price,
             products.description,
