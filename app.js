@@ -17,6 +17,7 @@ app.use(morgan('dev'));
 app.use(router);
 app.use(globalErrorHandler);
 app.use(routers);
+
 app.get('/ping', (req, res) => {
   res.json({ message: 'pong' });
 });
