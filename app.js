@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const routers = require('./routers');
 
 const dataSource = require('./models/appDataSource');
 const { globalErrorHandler } = require('./utils/error');
@@ -16,7 +15,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(router);
 app.use(globalErrorHandler);
-app.use(routers);
+
 app.get('/ping', (req, res) => {
   res.json({ message: 'pong' });
 });
