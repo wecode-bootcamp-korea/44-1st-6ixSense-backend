@@ -14,7 +14,6 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
-
 app.use(router);
 app.use(globalErrorHandler);
 app.use(routers);
