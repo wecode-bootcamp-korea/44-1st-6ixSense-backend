@@ -21,9 +21,24 @@ const getCartByUserId = async (userId) => {
     return result;
   } catch (err) {
     const error = new Error('INVALID_DATA_SELECT');
+  }
+};
+
+const insertCart = async (userId, productId, quantity) => {
+  try {
+    return await appDataSource.query(
+      `INSERT INTO carts (
+            user_id,
+            product_id,
+            quantity
+        ) VALUES (?,?,?);`,
+      [userId, productId, quantity]
+    );
+  } catch (err) {
+    const error = new Error('APPDATASOURCE_ERROR');
     error.statusCode = 400;
     throw error;
   }
 };
 
-module.exports = { getCartByUserId };
+module.exports = { insertCart, getCartByUserId };
