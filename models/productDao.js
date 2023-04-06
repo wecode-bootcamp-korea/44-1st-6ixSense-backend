@@ -5,7 +5,7 @@ const productList = async (categoryId, sort, limit, offset) => {
     let whereCondition = '';
 
     if (categoryId) {
-      whereCondition = `WHERE products.id IN (${categoryId})`;
+      whereCondition = `WHERE products.category_id IN (${categoryId})`;
     }
     const sortList = {
       priceInASC: 'products.price ASC',
@@ -32,9 +32,9 @@ const productList = async (categoryId, sort, limit, offset) => {
           THEN products.price * (1 - products.discount_rate)
           ELSE products.price END AS discountedPrice
         FROM categories
-        JOIN products ON categories.id = products.category_id
-        JOIN product_images ON products.id = product_images.product_id
-        JOIN incenses ON products.incenses_id = incenses.id
+        RIGHT JOIN products ON categories.id = products.category_id
+        LEFT JOIN product_images ON products.id = product_images.product_id
+        LEFT JOIN incenses ON products.incenses_id = incenses.id
         ${whereCondition}
         GROUP BY products.id
         ORDER BY ${sortCondition}
@@ -42,6 +42,7 @@ const productList = async (categoryId, sort, limit, offset) => {
       `,
       [limit, offset]
     );
+    console.log(productList);
     return productList;
   } catch (err) {
     console.log(err);
