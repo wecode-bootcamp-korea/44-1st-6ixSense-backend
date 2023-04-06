@@ -17,6 +17,14 @@ const likes = async (userId, productId) => {
   }
 };
 
+const likesCensel = async (userId, productId) => {
+  try {
+    return appDataSource.query(
+      ``
+    )
+  }
+}
+
 module.exports = {
   likes,
 };
