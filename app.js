@@ -5,11 +5,7 @@ const morgan = require('morgan');
 
 const dataSource = require('./models/appDataSource');
 const { globalErrorHandler } = require('./utils/error');
-<<<<<<< HEAD
-const router = require('./routes/index');
-=======
 const router = require('./routes');
->>>>>>> main
 
 const app = express();
 const PORT = process.env.PORT;
@@ -17,10 +13,6 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
-<<<<<<< HEAD
-=======
-app.use(router);
->>>>>>> main
 app.use(globalErrorHandler);
 app.use(router);
 
