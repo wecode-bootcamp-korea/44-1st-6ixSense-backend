@@ -35,10 +35,10 @@ const checkProductId = async (productId) => {
       (SELECT   
           id 
           FROM products 
-          WHERE id = ?)`,
+          WHERE id = ?) as isProduct`,
       [productId]
     );
-    return result;
+    return !!parseInt(result.isProduct);
   } catch (err) {
     const error = new Error('appDataSource error');
     error.statusCode = 400;
