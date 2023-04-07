@@ -1,6 +1,36 @@
 const userDao = require('../models/userDao');
-const { baseError } = require('../utils/error');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const getUserByAccount = async (account) => {
+  return await userDao.getUserByAccount(account);
+};
+
+const getUserById = async (userId) => {
+  return await userDao.getUserById(userId);
+};
+
+const signIn = async (account, password) => {
+  const user = await userDao.getUserByAccount(account);
+
+  if (!user) {
+    const error = new Error('USER_NOT_VALID');
+    error.statusCode = 401;
+    throw error;
+  }
+
+  const checkHash = await bcrypt.compare(password, user.password);
+
+  if (!checkHash) {
+    const error = new Error('USER_NOT_VALID');
+    error.statusCode = 401;
+    throw error;
+  }
+  const payLoad = { id: user.id };
+  const secretKey = process.env.SECRET_KEY;
+  const accessToken = jwt.sign(payLoad, secretKey);
+  return accessToken;
+};
 
 const signUp = async (name, account, password, phoneNumber, birthday, gender) => {
   const accountRegex = /^[a-z0-9]{4,12}$/;
@@ -29,6 +59,4 @@ const signUp = async (name, account, password, phoneNumber, birthday, gender) =>
   return createUser;
 };
 
-module.exports = {
-  signUp,
-};
+module.exports = { getUserByAccount, getUserById, signIn, signUp };

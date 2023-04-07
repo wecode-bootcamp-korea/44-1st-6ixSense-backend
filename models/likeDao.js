@@ -17,12 +17,12 @@ const createLike = async (userId, productId) => {
   }
 };
 
-const deleteLike = async (userId) => {
+const deleteLike = async (userId, productId) => {
   try {
     return appDataSource.query(
       `DELETE FROM likes
-      WHERE likes.user_id = ?`,
-      [userId]
+      WHERE likes.user_id = ? AND likes.product_id = ?`,
+      [userId, productId]
     );
   } catch (err) {
     console.log(err);
