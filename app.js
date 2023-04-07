@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const dataSource = require('./models/appDataSource');
 const { globalErrorHandler } = require('./utils/error');
 const router = require('./routes');
+const routers = require('./routers');
 
 const app = express();
 const PORT = process.env.PORT;
