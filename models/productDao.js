@@ -35,11 +35,9 @@ const checkProductId = async (productId) => {
       (SELECT   
           id 
           FROM products 
-          WHERE id = ?)
-    `,
+          WHERE id = ?)`,
       [productId]
     );
-    console.log(result);
     return result;
   } catch (err) {
     const error = new Error('appDataSource error');
