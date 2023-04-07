@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const routers = require('./routers');
 
 const dataSource = require('./models/appDataSource');
 const { globalErrorHandler } = require('./utils/error');
