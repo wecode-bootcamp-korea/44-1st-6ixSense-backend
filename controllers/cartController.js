@@ -1,13 +1,6 @@
 const cartService = require('../services/cartService');
 const { catchAsync } = require('../utils/error');
 
-const getCartByUserId = catchAsync(async (req, res) => {
-  const userId = await req.userId;
-
-  const result = await cartService.getCartByUserId(userId, productId, quantity);
-  return res.status(201).json({ data: result });
-});
-
 const insertCart = catchAsync(async (req, res) => {
   const { productId, quantity } = req.body;
 
@@ -23,4 +16,14 @@ const insertCart = catchAsync(async (req, res) => {
   return res.status(201).json({ message: 'CART_SAVE_SUCCESS' });
 });
 
-module.exports = { insertCart, getCartByUserId };
+const getCartByUserId = catchAsync(async (req, res) => {
+  const userId = await req.userId;
+
+  const result = await cartService.getCartByUserId(userId);
+  return res.status(201).json({ data: result });
+});
+
+module.exports = {
+  insertCart,
+  getCartByUserId,
+};
