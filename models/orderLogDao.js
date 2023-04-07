@@ -2,15 +2,13 @@ const appDataSource = require('./appDataSource');
 
 const orderLog = async (userId, orderNumber, statusId, totalPrice) => {
   try {
-    return (
-      await appDataSource.query(
-        `INSERT INTO orders (
+    return await appDataSource.query(
+      `INSERT INTO orders (
         user_id,
         order_number,
         status_id,
         total_price
-        ) VALUES (?, ?, ?, ?)`
-      ),
+        ) VALUES (?, ?, ?, ?)`,
       [userId, orderNumber, statusId, totalPrice]
     );
   } catch (err) {
