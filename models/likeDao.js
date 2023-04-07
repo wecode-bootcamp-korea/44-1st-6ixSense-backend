@@ -1,6 +1,6 @@
 const appDataSource = require('./appDataSource');
 
-const likes = async (userId, productId) => {
+const createLike = async (userId, productId) => {
   try {
     return appDataSource.query(
       `INSERT INTO likes (
@@ -17,7 +17,7 @@ const likes = async (userId, productId) => {
   }
 };
 
-const likesCensel = async (userId) => {
+const deleteLike = async (userId) => {
   try {
     return appDataSource.query(
       `DELETE FROM likes
@@ -33,6 +33,6 @@ const likesCensel = async (userId) => {
 };
 
 module.exports = {
-  likes,
-  likesCensel,
+  createLike,
+  deleteLike,
 };

@@ -1,14 +1,14 @@
 const likeDao = require('../models/likeDao');
 
-const likes = async (userId, productId) => {
-  return await likeDao.likes(userId, productId);
+const createLike = async (userId, productId) => {
+  return await likeDao.createLike(userId, productId);
 };
 
-const likesCensel = async (userId) => {
-  return await likeDao.likesCensel(userId);
+const deleteLike = async (userId) => {
+  return await likeDao.deleteLike(userId);
 };
 
 module.exports = {
-  likes,
-  likesCensel,
+  createLike,
+  deleteLike,
 };
