@@ -4,8 +4,8 @@ const router = express.Router();
 
 const likeController = require('../controllers/likeController');
 
-router.post('/:productId', checkLogInToken, likeController.createLike);
-router.delete('/:productId', checkLogInToken, likeController.deleteLike);
+router.post('', checkLogInToken, likeController.createLike);
+router.delete('', checkLogInToken, likeController.deleteLike);
 
 module.exports = {
   router,

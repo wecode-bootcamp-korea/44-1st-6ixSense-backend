@@ -29,6 +29,27 @@ const getProduct = async (productId) => {
   }
 };
 
+const getProdcutById = async (productId) => {
+  try {
+    const [product] = await appDataSource.query(
+      `SELECT
+        products.id
+      FROM products
+      WHERE products.id = ?
+    `,
+      [productId]
+    );
+
+    return product;
+  } catch (err) {
+    console.log(err);
+    const error = new Error('appDataSource error');
+    error.statusCode = 400;
+    throw error;
+  }
+};
+
 module.exports = {
   getProduct,
+  getProdcutById,
 };
