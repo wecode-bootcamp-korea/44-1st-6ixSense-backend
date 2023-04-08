@@ -29,20 +29,21 @@ const getProduct = async (productId) => {
   }
 };
 
-const getProductById = async (productId) => {
+const checkProductId = async (productId) => {
   try {
-    const [product] = await appDataSource.query(
-      `SELECT 
-        products.id
-      FROM products
-      WHERE products.id = ?
-      `,
+    const [result] = await appDataSource.query(
+      `SELECT EXISTS
+      (
+        SELECT
+              id
+              FROM products
+              WHERE id = ?) as isProduct`,
       [productId]
     );
-    return product;
+    return !!parseInt(result.isProduct);
   } catch (err) {
     console.log(err);
-    const error = new Error('appDataSource Error');
+    const error = new Error('appDataSource error');
     error.statusCode = 400;
     throw error;
   }
@@ -50,5 +51,5 @@ const getProductById = async (productId) => {
 
 module.exports = {
   getProduct,
-  getProductById,
+  checkProductId,
 };
