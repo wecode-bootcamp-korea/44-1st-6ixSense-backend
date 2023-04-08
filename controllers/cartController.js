@@ -13,7 +13,7 @@ const insertCart = catchAsync(async (req, res) => {
 
   const result = await cartService.insertCart(userId, productId, quantity);
 
-  return res.status(201).json({ message: 'CART_SUCCESS' });
+  return res.status(201).json({ message: 'CREATE_CART_SUCCESS' });
 });
 
 module.exports = { insertCart };
