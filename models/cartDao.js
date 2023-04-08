@@ -9,7 +9,7 @@ const insertCart = async (userId, productId, quantity) => {
         quantity
         ) SELECT ?,?,? 
       WHERE NOT EXISTS
-      (SELECT product_id FROM carts WHERE product_id =${productId}) `,
+      (SELECT product_id FROM carts WHERE user_id = ${userId} AND product_id =${productId}) `,
       [userId, productId, quantity]
     );
 
