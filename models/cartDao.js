@@ -19,16 +19,17 @@ const insertCart = async (userId, productId, quantity) => {
 
 const getCartByUserId = async (userId) => {
   try {
+    console.log(userId);
     const result = await appDataSource.query(
       `SELECT 
-              products.name as productName,
-              products.price as productPrice,
-              products.discount_rate  as discountRate,
+          products.name as productName,
+          products.price as productPrice,
+          products.discount_rate  as discountRate,
           CASE
               WHEN products.discount_rate > 0
               THEN products.price * (1 - products.discount_rate)
               ELSE products.price END AS discountedPrice,
-              JSON_ARRAYAGG(product_images.image_url) as productImages
+          JSON_ARRAYAGG(product_images.image_url) as productImages
           FROM carts 
           JOIN products  ON carts.product_id  = products.id
           JOIN product_images ON product_images.product_id = products.id

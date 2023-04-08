@@ -3,8 +3,7 @@ const { catchAsync } = require('../utils/error');
 
 const insertCart = catchAsync(async (req, res) => {
   const { productId, quantity } = req.body;
-
-  const userId = await req.userId;
+  const userId = await req.user.id;
 
   if (!userId || !productId || !quantity) {
     const error = new Error('KEY_ERROR');
@@ -17,8 +16,7 @@ const insertCart = catchAsync(async (req, res) => {
 });
 
 const getCartByUserId = catchAsync(async (req, res) => {
-  const userId = await req.userId;
-
+  const userId = await req.user.id;
   const result = await cartService.getCartByUserId(userId);
   return res.status(201).json({ data: result });
 });
