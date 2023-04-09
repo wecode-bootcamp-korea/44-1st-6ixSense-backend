@@ -5,7 +5,7 @@ const insertCart = catchAsync(async (req, res) => {
   const { productId, quantity } = req.body;
   const userId = await req.user.id;
 
-  if (!userId || !productId || !quantity) {
+  if (!productId || !quantity) {
     const error = new Error('KEY_ERROR');
     error.statusCode = 400;
     throw error;

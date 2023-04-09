@@ -7,10 +7,9 @@ const insertCart = async (userId, productId, quantity) => {
         user_id,
         product_id,
         quantity
-        ) SELECT ?,?,? 
+        ) SELECT ${userId},${productId},${quantity} 
       WHERE NOT EXISTS
-      (SELECT product_id FROM carts WHERE user_id = ${userId} AND product_id =${productId}) `,
-      [userId, productId, quantity]
+      (SELECT product_id FROM carts WHERE user_id = ${userId} AND product_id =${productId}) `
     );
 
     const createCartAffectedRows = createCart.affectedRows;
@@ -18,7 +17,7 @@ const insertCart = async (userId, productId, quantity) => {
     if (!createCartAffectedRows) {
       const updateQuantity = await appDataSource.query(
         `UPDATE carts
-        SET quantity = quantity + ${quantity}
+        SET quantity =  ${quantity}
         WHERE user_id = ${userId} AND
         product_id =${productId} `
       );
@@ -27,7 +26,6 @@ const insertCart = async (userId, productId, quantity) => {
 
     return createCart;
   } catch (err) {
-    console.log(err);
     const error = new Error('APPDATASOURCE_ERROR');
     error.statusCode = 400;
     throw error;
