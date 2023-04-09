@@ -6,7 +6,7 @@ const getCartByUserId = catchAsync(async (req, res) => {
 
   const result = await cartService.getCartByUserId(userId);
 
-  return res.status(201).json(result);
+  return res.status(200).json(result);
 });
 
 module.exports = {
