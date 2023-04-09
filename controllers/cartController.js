@@ -5,7 +5,7 @@ const afterRemoveCartInfo = catchAsync(async (req, res) => {
   const { productId } = req.query;
   const userId = req.user.id;
 
-  const result = cartService.afterRemoveCartInfo(userId, productId);
+  const result = await cartService.afterRemoveCartInfo(userId, productId);
 
   return res.status(200).json(result);
 });

@@ -24,10 +24,8 @@ const getCartByUserId = async (userId) => {
         FROM product_images
         GROUP BY product_id
     ) as images ON images.product_id = carts.product_id 
-    WHERE carts.user_id = ?`,
-      [userId]
+    WHERE carts.user_id = ${userId}`
     );
-
     return result;
   } catch (err) {
     const error = new Error('INVALID_DATA_SELECT');
