@@ -6,7 +6,6 @@ const morgan = require('morgan');
 const dataSource = require('./models/appDataSource');
 const { globalErrorHandler } = require('./utils/error');
 const router = require('./routes');
-const routers = require('./routers');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -14,9 +13,9 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(globalErrorHandler);
 app.use(router);
-app.use(routers);
+
+app.use(globalErrorHandler);
 
 app.get('/ping', (req, res) => {
   res.json({ message: 'pong' });
