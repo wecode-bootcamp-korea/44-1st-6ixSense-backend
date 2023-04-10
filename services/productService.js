@@ -1,6 +1,6 @@
 const productDao = require('../models/productDao');
 
-const productList = async (categoryId, sort, limit, offset) => {
+const getProductList = async (categoryId, sort, limit, offset) => {
   return await productDao.getProductList(categoryId, sort, limit, offset);
 };
 
@@ -10,5 +10,5 @@ const getProduct = async (productId) => {
 
 module.exports = {
   getProduct,
-  productList,
+  getProductList,
 };
