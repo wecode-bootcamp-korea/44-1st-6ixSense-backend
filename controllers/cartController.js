@@ -1,6 +1,14 @@
 const cartService = require('../services/cartService');
 const { catchAsync } = require('../utils/error');
 
+const getCartByUserId = catchAsync(async (req, res) => {
+  const userId = await req.user.id;
+
+  const result = await cartService.getCartByUserId(userId);
+
+  return res.status(200).json(result);
+});
+
 const insertCart = catchAsync(async (req, res) => {
   const { productId, quantity } = req.body;
   const userId = await req.user.id;
@@ -16,4 +24,7 @@ const insertCart = catchAsync(async (req, res) => {
   return res.status(201).json({ message: 'CREATE_CART_SUCCESS' });
 });
 
-module.exports = { insertCart };
+module.exports = {
+  insertCart,
+  getCartByUserId,
+};

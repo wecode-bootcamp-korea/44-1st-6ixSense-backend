@@ -25,6 +25,7 @@ const checkLogInToken = async (req, res, next) => {
     }
 
     req.user = user;
+
     next();
   } catch (err) {
     return res.status(401).json({

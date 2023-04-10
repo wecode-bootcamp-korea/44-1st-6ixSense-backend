@@ -13,4 +13,8 @@ const insertCart = async (userId, productId, quantity) => {
   return await cartDao.insertCart(userId, productId, quantity);
 };
 
-module.exports = { insertCart };
+const getCartByUserId = async (userId) => {
+  return await cartDao.getCartByUserId(userId);
+};
+
+module.exports = { getCartByUserId, insertCart };
