@@ -60,6 +60,7 @@ const createUser = async (name, account, hashedPassword, phoneNumber, birthday, 
       [name, account, hashedPassword, phoneNumber, birthday, gender]
     );
   } catch (err) {
+    console.log(err);
     const error = new Error('appDataSource_Error');
     error.statusCode = 400;
     throw error;
