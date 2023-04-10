@@ -49,4 +49,12 @@ const removeCart = async (userId, productId) => {
   }
 };
 
-module.exports = { getCartByUserId, removeCart };
+const modifyCart = async (userId, productId, quantity) => {
+  const updateCart = await appDataSource.query(
+    `UPDATE carts  SET quantity = ${quantity}
+    WHERE user_id = ${userId} and product_id  = ${productId}`
+  );
+  return updateCart;
+};
+
+module.exports = { getCartByUserId, removeCart, modifyCart };
