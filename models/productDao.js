@@ -1,6 +1,6 @@
 const appDataSource = require('./appDataSource');
 
-const productList = async (categoryId, sort, limit, offset) => {
+const getProductList = async (categoryId, sort, limit, offset) => {
   try {
     let whereCondition = '';
 
@@ -98,7 +98,7 @@ const checkProductId = async (productId) => {
 };
 
 module.exports = {
-  productList,
+  getProductList,
   getProduct,
   checkProductId,
 };
