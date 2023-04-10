@@ -2,7 +2,6 @@ const appDataSource = require('./appDataSource');
 
 const getCartByUserId = async (userId) => {
   try {
-    console.log(userId);
     const result = await appDataSource.query(
       `SELECT 
       carts.product_id as productId,
