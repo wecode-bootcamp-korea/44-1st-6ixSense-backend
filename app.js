@@ -14,11 +14,6 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(router);
-<<<<<<< HEAD
-app.use(routers);
-=======
-
->>>>>>> main
 app.use(globalErrorHandler);
 
 app.get('/ping', (req, res) => {
