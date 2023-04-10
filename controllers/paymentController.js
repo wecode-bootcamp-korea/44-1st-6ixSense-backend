@@ -6,7 +6,7 @@ const payment = catchAsync(async (req, res) => {
   const { productId } = req.query;
 
   const paymentPage = await paymentService.payment(userId, productId);
-  return res.status(200).json(paymentPage);
+  return res.status(200).json({ paymentPage });
 });
 
 module.exports = {
