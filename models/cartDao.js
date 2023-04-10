@@ -26,7 +26,7 @@ const insertCart = async (userId, productId, quantity) => {
 
     return createCart;
   } catch (err) {
-    const error = new Error('APPDATASOURCE_ERROR');
+    const error = new Error('dataSource_Error');
     error.statusCode = 400;
     throw error;
   }
