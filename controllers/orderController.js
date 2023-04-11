@@ -1,7 +1,7 @@
-const orderLogService = require('../services/orderLogService');
+const orderService = require('../services/orderService');
 const { catchAsync } = require('../utils/error');
 
-const orderLog = catchAsync(async (req, res) => {
+const createOrder = catchAsync(async (req, res) => {
   const userId = req.user.id;
   const { statusId, totalPrice } = req.body;
 
@@ -11,11 +11,11 @@ const orderLog = catchAsync(async (req, res) => {
     throw error;
   }
 
-  await orderLogService.orderLog(userId, statusId, totalPrice);
+  await orderService.createOrder(userId, statusId, totalPrice);
 
   return res.status(201).json({ message: '주문 완료!' });
 });
 
 module.exports = {
-  orderLog,
+  createOrder,
 };

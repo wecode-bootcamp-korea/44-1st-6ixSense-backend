@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const checkLogInToken = require('../middleware/auth');
 
-const orderLogController = require('../controllers/orderLogController');
+const orderController = require('../controllers/orderController');
 
-router.post('', checkLogInToken, orderLogController.orderLog);
+router.post('', checkLogInToken, orderController.createOrder);
 
 module.exports = {
   router,
