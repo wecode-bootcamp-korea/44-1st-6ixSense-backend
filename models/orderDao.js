@@ -1,6 +1,6 @@
 const appDataSource = require('./appDataSource');
 
-const createOrder = async (userId, statusId, totalPrice, productId, quantity) => {
+const createOrder = async (userId, statusId, totalPrice, cartId, productId, quantity) => {
   try {
     const createOrderTable = await appDataSource.query(
       `  INSERT INTO orders (
@@ -26,12 +26,19 @@ const createOrder = async (userId, statusId, totalPrice, productId, quantity) =>
         limit 1`
     );
 
+    const orderId = selectOrderInformationByUserId.orderId;
+
     const createOrderItems = await appDataSource.query(
-      `INSERT INTO order_items
+      `INSERT INTO order_items (
           order_id,
           product_id,
-          quantity`,
-      [selectOrderInformationByUserId.orderId, productId, quantity]
+          quantity)
+          SELECT
+                (SELECT id FROM orders WHERE orders.id = ${orderId}),
+                product_id,
+                quantity
+          FROM carts
+          WHERE carts.id IN (${cartId}) and product_id in (${productId})`
     );
 
     const pointsDeduction = await appDataSource.query(
@@ -41,10 +48,13 @@ const createOrder = async (userId, statusId, totalPrice, productId, quantity) =>
               WHERE users.id = ${userId} AND users.point > ${totalPrice}`,
       [totalPrice, userId]
     );
-    console.log(selectOrderInformationByUserId);
-    return createOrderTable, selectOrderInformationByUserId, createOrderItems, pointsDeduction;
+
+    const deleteCart = await appDataSource.query(`DELETE FROM carts WHERE user_id = ${userId}`, [userId]);
+
+    return createOrderTable, selectOrderInformationByUserId, createOrderItems, pointsDeduction, deleteCart;
   } catch (err) {
     console.log(err);
+
     const error = new Error('appDataSource error');
     error.statusCode = 400;
     throw error;
