@@ -11,11 +11,7 @@ const createOrder = catchAsync(async (req, res) => {
     throw error;
   }
 
-  await Promise.all(
-    carts.map(async ({ cartId, productId, quantity }) => {
-      await orderService.createOrder(userId, statusId, totalPrice, cartId, productId, quantity);
-    })
-  );
+  await orderService.createOrder(userId, statusId, totalPrice, carts);
   return res.status(201).json({ message: '주문 완료!' });
 });
 
