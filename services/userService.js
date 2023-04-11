@@ -26,9 +26,11 @@ const signIn = async (account, password) => {
     error.statusCode = 401;
     throw error;
   }
+
   const payLoad = { id: user.id };
   const secretKey = process.env.SECRET_KEY;
   const accessToken = jwt.sign(payLoad, secretKey);
+
   return accessToken;
 };
 
