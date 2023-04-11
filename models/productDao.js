@@ -60,19 +60,21 @@ const getProduct = async (productId) => {
         products.description,
         products.stock,
         JSON_ARRAYAGG(
-          products.detail_image
-        ) AS detailImage,
+          product_images.image_url
+        ) AS productImage,
         products.discount_rate AS discountRate,
         CASE
           WHEN products.discount_rate > 0 THEN products.price * (1 - products.discount_rate)
           ELSE products.price
           END AS discountedPrice
-        FROM products
+        FROM products INNER JOIN product_images ON products.id = product_images.product_id
         WHERE products.id = ?
+        GROUP BY products.id
         `,
       [productId]
     );
   } catch (err) {
+    console.log(err);
     const error = new Error('appDataSource error');
     error.statusCode = 400;
     throw error;
