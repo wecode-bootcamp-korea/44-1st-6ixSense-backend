@@ -2,12 +2,12 @@ const appDataSource = require('./appDataSource');
 
 const createOrder = async (userId, statusId, totalPrice, ...params) => {
   try {
-    const cartIds = params.map((item) => item.cartId);
-    const minCartId = Math.min(...cartIds);
-    const maxCartId = Math.max(...cartIds);
+    // const cartIds = params.map((item) => item.cartId);
+    // const minCartId = Math.min(...cartIds);
+    // const maxCartId = Math.max(...cartIds);
 
-    const productIds = params.map((item) => item.productId);
-    console.log(productIds);
+    // const productIds = params.map((item) => item.productId);
+    // console.log(productIds);
     const createOrderTable = await appDataSource.query(
       `  INSERT INTO orders (
            user_id,
@@ -41,7 +41,7 @@ const createOrder = async (userId, statusId, totalPrice, ...params) => {
                 product_id,
                 quantity
             FROM carts
-            WHERE carts.id BETWEEN ${minCartId} AND ${maxCartId} and product_id in (${productIds}) `
+            WHERE carts.id IN (${cartId}) and product_id in (${productIds}) `
     );
 
     console.log(createOrderItems);
