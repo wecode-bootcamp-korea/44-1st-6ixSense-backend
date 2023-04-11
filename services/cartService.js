@@ -17,20 +17,12 @@ const getCartByUserId = async (userId) => {
   return await cartDao.getCartByUserId(userId);
 };
 
-const afterRemoveCartInfo = async (userId, productId) => {
-  await cartDao.removeCart(userId, productId);
-
-  const getCartByUserId = await cartDao.getCartByUserId(userId);
-
-  return getCartByUserId;
+const afterRemoveCartInfo = async (userId, cartId) => {
+  return await cartDao.removeCart(userId, cartId);
 };
 
-const modifyCart = async (userId, productId, quantity) => {
-  await cartDao.modifyCart(userId, productId, quantity);
-
-  const getCartByUserId = await cartDao.getCartByUserId(userId);
-
-  return getCartByUserId;
+const modifyCart = async (userId, cartId, quantity) => {
+  return await cartDao.modifyCart(userId, cartId, quantity);
 };
 
 module.exports = { getCartByUserId, insertCart, afterRemoveCartInfo, modifyCart };

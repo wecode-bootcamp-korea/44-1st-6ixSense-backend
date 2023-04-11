@@ -19,7 +19,7 @@ const getProductList = async (categoryId, sort, limit, offset) => {
         products.name as productName,
         products.price as productPrice,
         products.description as productDesc,
-        products.discount_rate as procuctDiscountRate, 
+        products.discount_rate as productDiscountRate, 
         products.category_id as productCategoryId,
         categories.name as categoryName,
         categories.id as categoryId,
