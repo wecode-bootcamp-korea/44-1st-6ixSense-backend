@@ -1,15 +1,20 @@
 const appDataSource = require('./appDataSource');
 
-const createOrder = async (userId, statusId, totalPrice, productId, quantity) => {
+const createOrder = async (userId, statusId, totalPrice, ...params) => {
   try {
+    const cartIds = params.map((item) => item.cartId);
+    const minCartId = Math.min(...cartIds);
+    const maxCartId = Math.max(...cartIds);
+
+    const productIds = params.map((item) => item.productId);
+    console.log(productIds);
     const createOrderTable = await appDataSource.query(
       `  INSERT INTO orders (
            user_id,
            status_id,
            total_price
-           ) VALUES (?,?,?)
-           `,
-      [userId, statusId, totalPrice]
+           ) VALUES (${userId},${statusId},${totalPrice.totalPrice})
+           `
     );
 
     const [selectOrderInformationByUserId] = await appDataSource.query(
@@ -26,11 +31,21 @@ const createOrder = async (userId, statusId, totalPrice, productId, quantity) =>
         limit 1`
     );
 
+    const orderId = selectOrderInformationByUserId.orderId;
+    console.log(orderId);
 
+    const createOrderItems = await appDataSource.query(
+      `INSERT INTO order_items (order_id, product_id, quantity)
+            SELECT
+                (SELECT id FROM orders WHERE orders.id = ${orderId}),
+                product_id,
+                quantity
+            FROM carts
+            WHERE carts.id BETWEEN ${minCartId} AND ${maxCartId} and product_id in (${productIds}) `
+    );
 
-    console.log(selectOrderInformationByUserId.orderId);
-
-    return selectOrderInformationByUserId;
+    console.log(createOrderItems);
+    return createOrderItems;
   } catch (err) {
     const error = new Error('INVALID_DATA_INPUT');
     error.statusCode = 400;
