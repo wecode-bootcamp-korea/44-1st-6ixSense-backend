@@ -3,7 +3,7 @@ const { catchAsync } = require('../utils/error');
 
 const getProduct = catchAsync(async (req, res) => {
   const { productId } = req.params;
-  const productDetail = await productService.getProduct(productId);
+  const [productDetail] = await productService.getProduct(productId);
 
   return res.status(200).json(productDetail);
 });
