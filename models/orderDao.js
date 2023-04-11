@@ -26,9 +26,23 @@ const createOrder = async (userId, statusId, totalPrice, productId, quantity) =>
         limit 1`
     );
 
-    console.log(selectOrderInformationByUserId.orderId);
+    const createOrderItems = await appDataSource.query(
+      `INSERT INTO order_items
+          order_id,
+          product_id,
+          quantity`,
+      [selectOrderInformationByUserId.orderId, productId, quantity]
+    );
 
-    return selectOrderInformationByUserId;
+    const pointsDeduction = await appDataSource.query(
+      `UPDATE users 
+              SET 
+              users.point = users.point - ${totalPrice}
+              WHERE users.id = ${userId} AND users.point > ${totalPrice}`,
+      [totalPrice, userId]
+    );
+    console.log(selectOrderInformationByUserId);
+    return createOrderTable, selectOrderInformationByUserId, createOrderItems, pointsDeduction;
   } catch (err) {
     console.log(err);
     const error = new Error('appDataSource error');
