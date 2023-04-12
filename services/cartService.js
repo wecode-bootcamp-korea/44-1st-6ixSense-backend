@@ -17,4 +17,12 @@ const getCartByUserId = async (userId) => {
   return await cartDao.getCartByUserId(userId);
 };
 
-module.exports = { getCartByUserId, insertCart };
+const afterRemoveCartInfo = async (userId, cartId) => {
+  return await cartDao.removeCart(userId, cartId);
+};
+
+const modifyCart = async (userId, cartId, quantity) => {
+  return await cartDao.modifyCart(userId, cartId, quantity);
+};
+
+module.exports = { getCartByUserId, insertCart, afterRemoveCartInfo, modifyCart };
