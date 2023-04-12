@@ -1,12 +1,25 @@
 const orderDao = require('../models/orderDao');
-const productDao = require('../models/productDao');
 
-const createOrder = async (userId, statusId, totalPrice, carts) => {
-  const cartId = carts.map((carts) => carts.cartId);
-  const productId = carts.map((carts) => carts.productId);
-  const quantity = carts.map((carts) => carts.quantity);
+const orderStatus = {
+  pending: 1,
+  confirm: 2,
+};
+Object.freeze(orderStatus);
 
-  return await orderDao.createOrder(userId, statusId, totalPrice, cartId, productId, quantity);
+const createOrder = async (user, totalPrice, carts) => {
+  const userPoint = user.point;
+
+  if (userPoint < totalPrice) throw new Error('Not Enough Point');
+
+  const cartIds = carts.map((carts) => carts.cartId);
+
+  const cartItems = carts.map((cart) => {
+    return [cart.productId, cart.quantity];
+  });
+
+  const statusId = orderStatus.confirm;
+
+  return await orderDao.createOrder(user.id, statusId, totalPrice, cartIds, cartItems);
 };
 
 module.exports = {
