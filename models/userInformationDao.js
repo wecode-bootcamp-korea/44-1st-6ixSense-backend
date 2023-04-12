@@ -1,6 +1,6 @@
 const appDataSource = require('./appDataSource');
 
-const payment = async (userId) => {
+const userInformation = async (userId) => {
   try {
     return await appDataSource.query(
       `SELECT
@@ -19,5 +19,5 @@ const payment = async (userId) => {
 };
 
 module.exports = {
-  payment,
+  userInformation,
 };
