@@ -15,7 +15,6 @@ const globalErrorHandler = (err, req, res, next) => {
 class CustomError extends Error {
   constructor(statusCode, message) {
     super(message);
-
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, CustomError);
     }
@@ -24,6 +23,5 @@ class CustomError extends Error {
     this.message = message;
   }
 }
-
 
 module.exports = { catchAsync, globalErrorHandler, CustomError };

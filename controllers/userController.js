@@ -1,16 +1,12 @@
 const userService = require('../services/userService');
-const { catchAsync } = require('../utils/error');
+const { catchAsync, CustomError } = require('../utils/error');
 
 const signUp = catchAsync(async (req, res) => {
   const { name, account, password, phoneNumber, birthday, gender } = req.body;
 
-  if (!name || !account || !password || !phoneNumber || !birthday || !gender) {
-    const error = new Error('KEY_ERROR');
-    error.statusCode = 400;
-    throw error;
-  }
+  if (!name || !account || !password || !phoneNumber || !birthday || !gender) throw new CustomError(400, 'KEY_ERROR');
 
-  const creteUser = await userService.signUp(name, account, password, phoneNumber, birthday, gender);
+  await userService.signUp(name, account, password, phoneNumber, birthday, gender);
 
   return res.status(201).json({ message: 'ACCOUNT_SUCCESS' });
 });
@@ -18,11 +14,7 @@ const signUp = catchAsync(async (req, res) => {
 const signIn = catchAsync(async (req, res) => {
   const { account, password } = req.body;
 
-  if (!account || !password) {
-    const error = new Error('KEY_ERROR');
-    error.statusCode = 400;
-    throw error;
-  }
+  if (!account || !password) throw new CustomError(400, 'KEY_ERROR');
 
   const accessToken = await userService.signIn(account, password);
 

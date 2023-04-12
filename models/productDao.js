@@ -1,4 +1,5 @@
 const appDataSource = require('./appDataSource');
+const { CustomError } = require('../utils/error');
 
 const getProductList = async (categoryId, sort, limit, offset) => {
   try {
@@ -67,8 +68,7 @@ const getProduct = async (productId) => {
           WHEN products.discount_rate > 0 THEN products.price * (1 - products.discount_rate)
           ELSE products.price
           END AS discountedPrice
-        FROM products
-        JOIN product_images on product_images.product_id = products.id
+        FROM products INNER JOIN product_images ON products.id = product_images.product_id
         WHERE products.id = ?
         GROUP BY products.id
         `,

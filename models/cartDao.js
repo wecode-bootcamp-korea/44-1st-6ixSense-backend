@@ -1,16 +1,18 @@
 const appDataSource = require('./appDataSource');
+const { CustomError } = require('../utils/error');
 
 const getCartByUserId = async (userId) => {
   try {
     const result = await appDataSource.query(
       `SELECT 
-      carts.id as cartId,
-      carts.product_id as productId,
+      carts.id AS cartId,
+      carts.product_id AS productId,
       products.name as productName,
       products.price as productPrice,
       products.discount_rate as productDiscount,
       carts.quantity as productQuantity,
       carts.user_id as userId,
+      users.point as userPoint, 
       CASE
           WHEN products.discount_rate > 0
           THEN products.price * (1 - products.discount_rate)
@@ -24,15 +26,15 @@ const getCartByUserId = async (userId) => {
           JSON_ARRAYAGG(image_url) as productImages
       FROM product_images
       GROUP BY product_id
-  ) as images ON images.product_id = carts.product_id 
+  ) as images ON images.product_id = carts.product_id
+  JOIN users ON carts.user_id = users.id 
   WHERE carts.user_id = ?`,
       [userId]
     );
+
     return result;
-  } catch (err) {
-    const error = new Error('INVALID_DATA_SELECT');
-    error.statusCode = 400;
-    throw error;
+  } catch {
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
@@ -62,9 +64,7 @@ const insertCart = async (userId, productId, quantity) => {
 
     return createCart;
   } catch (err) {
-    const error = new Error('dataSource_Error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'Data Source Error');
   }
 };
 
@@ -74,10 +74,12 @@ const removeCart = async (userId, cartId) => {
   await queryRunner.connect();
   await queryRunner.startTransaction();
   try {
-    await queryRunner.query(
+    const removeCart = await queryRunner.query(
       `DELETE FROM carts 
             WHERE user_id = ${userId} and id IN (${cartId})`
     );
+
+    if (!removeCart.affectedRows) throw new CustomError(404, 'cartItem not Delete');
 
     const result = await queryRunner.query(
       `SELECT 
@@ -110,9 +112,7 @@ const removeCart = async (userId, cartId) => {
     return result;
   } catch (err) {
     await queryRunner.rollbackTransaction();
-    const error = new Error('dataSource_Error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'Data Source Error');
   } finally {
     await queryRunner.release();
   }
@@ -125,7 +125,7 @@ const modifyCart = async (userId, cartId, quantity) => {
   await queryRunner.startTransaction();
 
   try {
-    const updateCart = await queryRunner.query(
+    await queryRunner.query(
       `UPDATE carts  
           SET quantity = ${quantity}
           WHERE user_id = ${userId} and id  = ${cartId}`
@@ -163,9 +163,7 @@ const modifyCart = async (userId, cartId, quantity) => {
     return result;
   } catch (err) {
     await queryRunner.rollbackTransaction();
-    const error = new Error('dataSource_Error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'Data Source Error');
   } finally {
     await queryRunner.release();
   }
