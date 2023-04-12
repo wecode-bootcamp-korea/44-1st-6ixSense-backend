@@ -8,14 +8,14 @@ const getCartByUserId = async (userId) => {
       carts.product_id as productId,
       products.name as productName,
       products.price as productPrice,
-      products.discount_rate as procuctDiscountRate,
+      products.discount_rate as productDiscount,
       carts.quantity as productQuantity,
       carts.user_id as userId,
       CASE
           WHEN products.discount_rate > 0
           THEN products.price * (1 - products.discount_rate)
           ELSE products.price END AS discountedPrice,
-      images.productImages as productimages
+      images.productImages as productImage
   FROM carts
   JOIN products ON products.id = carts.product_id
    JOIN (
@@ -92,7 +92,7 @@ const removeCart = async (userId, cartId) => {
           WHEN products.discount_rate > 0
           THEN products.price * (1 - products.discount_rate)
           ELSE products.price END AS discountedPrice,
-      images.productImages as productImages
+      images.productImages as productImage
   FROM carts
   JOIN products ON products.id = carts.product_id
    JOIN (
@@ -144,7 +144,7 @@ const modifyCart = async (userId, cartId, quantity) => {
           WHEN products.discount_rate > 0
           THEN products.price * (1 - products.discount_rate)
           ELSE products.price END AS discountedPrice,
-      images.productImages as productImages
+      images.productImages as productImage
   FROM carts
   JOIN products ON products.id = carts.product_id
    JOIN (

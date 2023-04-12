@@ -1,5 +1,5 @@
 const cartService = require('../services/cartService');
-const { catchAsync } = require('../utils/error');
+const { catchAsync, CustomError } = require('../utils/error');
 
 const getCartByUserId = catchAsync(async (req, res) => {
   const userId = await req.user.id;
@@ -21,13 +21,18 @@ const insertCart = catchAsync(async (req, res) => {
 
   const result = await cartService.insertCart(userId, productId, quantity);
 
-  return res.status(201).json({ message: 'CREATE_CART_SUCCESS' });
+  return res.status(201).json(result);
 });
 
 const removeCart = catchAsync(async (req, res) => {
   const { cartId } = req.query;
   const userId = req.user.id;
 
+  if (!cartId) {
+    const error = new Error('KEY_ERROR');
+    error.statusCode = 400;
+    throw error;
+  }
   const result = await cartService.afterRemoveCartInfo(userId, cartId);
 
   return res.status(200).json(result);
@@ -44,7 +49,7 @@ const modifyCart = catchAsync(async (req, res) => {
   }
 
   const result = await cartService.modifyCart(userId, cartId, quantity);
-
+  console.log(result);
   return res.status(200).json(result);
 });
 
