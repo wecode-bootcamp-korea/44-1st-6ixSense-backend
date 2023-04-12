@@ -41,23 +41,29 @@ const createOrder = async (userId, statusId, totalPrice, cartId, productId, quan
                 product_id,
                 quantity
           FROM carts
-          WHERE carts.id IN (${cartId}) and product_id in (${productId})`
+          WHERE carts.id IN (${cartId}) AND product_id IN (${productId}) `
     );
 
-    const pointsDeduction = await queryRunner.query(
+    const pointDeduction = await queryRunner.query(
       `UPDATE users 
               SET 
               users.point = users.point - ${totalPrice}
-              WHERE users.id = ${userId} AND users.point > ${totalPrice}`,
-      [totalPrice, userId]
+              WHERE users.id = ${userId} AND users.point > ${totalPrice}`
     );
 
-    const deleteCart = await queryRunner.query(`DELETE FROM carts WHERE user_id = ${userId}`, [userId]);
+    if (!pointDeduction.affectedRows) {
+      const error = new Error('Not Enough Point');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const deleteCart = await queryRunner.query(`DELETE FROM carts WHERE user_id = ${userId} AND id IN (${cartId})`);
 
     await queryRunner.commitTransaction();
 
-    return { createOrderTable, selectOrderInformationByUserId, createOrderItems, pointsDeduction, deleteCart };
+    return { createOrderTable, selectOrderInformationByUserId, createOrderItems, pointDeduction, deleteCart };
   } catch (err) {
+    console.log(err);
     await queryRunner.rollbackTransaction();
     const error = new Error('appDataSource error');
     error.statusCode = 400;
