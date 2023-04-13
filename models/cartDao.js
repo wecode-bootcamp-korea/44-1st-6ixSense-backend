@@ -9,7 +9,7 @@ const getCartByUserId = async (userId) => {
       carts.product_id AS productId,
       products.name as productName,
       products.price as productPrice,
-      products.discount_rate as productDiscount,
+      products.discount_rate as productDiscountRate,
       carts.quantity as productQuantity,
       carts.user_id as userId,
       users.point as userPoint, 
