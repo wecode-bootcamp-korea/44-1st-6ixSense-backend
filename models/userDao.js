@@ -18,8 +18,7 @@ const getUserByAccount = async (account) => {
     );
     return result;
   } catch (err) {
-    console.log(err);
-    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 

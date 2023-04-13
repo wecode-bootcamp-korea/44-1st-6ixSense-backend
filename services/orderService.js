@@ -8,7 +8,7 @@ const orderStatus = {
 Object.freeze(orderStatus);
 
 const createOrder = async (user, totalPrice, carts) => {
-  const userPoint = user.point;
+  const userPoint = user.userPoint;
 
   if (userPoint < totalPrice) throw new CustomError(409, 'Not Enough Point');
 
