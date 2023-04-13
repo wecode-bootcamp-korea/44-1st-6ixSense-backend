@@ -34,7 +34,7 @@ const getCartByUserId = async (userId) => {
 
     return result;
   } catch {
-    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
@@ -64,7 +64,7 @@ const insertCart = async (userId, productId, quantity) => {
 
     return createCart;
   } catch (err) {
-    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
@@ -110,7 +110,7 @@ const removeCart = async (userId, cartId) => {
     return result;
   } catch (err) {
     await queryRunner.rollbackTransaction();
-    throw new CustomError(400, 'Data Source Error');
+    throw new CustomError(400, 'dataSource_Error');
   } finally {
     await queryRunner.release();
   }
@@ -161,7 +161,7 @@ const modifyCart = async (userId, cartId, quantity) => {
     return result;
   } catch (err) {
     await queryRunner.rollbackTransaction();
-    throw new CustomError(400, 'Data Source Error');
+    throw new CustomError(400, 'dataSource_Error');
   } finally {
     await queryRunner.release();
   }

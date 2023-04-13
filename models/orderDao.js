@@ -42,7 +42,7 @@ const createOrder = async (userId, statusId, totalPrice, cartId, cartItems) => {
     await queryRunner.commitTransaction();
   } catch (err) {
     await queryRunner.rollbackTransaction();
-    throw new CustomError(400, 'appDataSource error');
+    throw new CustomError(400, 'dataSource_Error');
   } finally {
     await queryRunner.release();
   }
