@@ -11,7 +11,7 @@ const createLike = async (userId, productId) => {
       [userId, productId]
     );
   } catch (err) {
-    throw new CustomError(400, 'appDataSource error');
+    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
   }
 };
 
@@ -23,7 +23,7 @@ const deleteLike = async (userId, productId) => {
       [userId, productId]
     );
   } catch (err) {
-    throw new CustomError(400, 'appDataSource error');
+    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
   }
 };
 

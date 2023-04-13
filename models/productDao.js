@@ -45,7 +45,7 @@ const getProductList = async (categoryId, sort, limit, offset) => {
     );
     return productList;
   } catch (err) {
-    throw new CustomError(400, 'appDataSource error');
+    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
   }
 };
 
@@ -73,7 +73,7 @@ const getProduct = async (productId) => {
       [productId]
     );
   } catch (err) {
-    throw new CustomError(400, 'appDataSource error');
+    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
   }
 };
 
@@ -89,7 +89,7 @@ const checkProductId = async (productId) => {
     );
     return !!parseInt(result.isProduct);
   } catch (err) {
-    throw new CustomError(400, 'appDataSource error');
+    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
   }
 };
 

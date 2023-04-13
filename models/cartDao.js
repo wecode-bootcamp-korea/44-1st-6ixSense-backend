@@ -34,7 +34,7 @@ const getCartByUserId = async (userId) => {
 
     return result;
   } catch {
-    throw new CustomError(400, 'dataSource_Error');
+    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
   }
 };
 
@@ -64,7 +64,7 @@ const insertCart = async (userId, productId, quantity) => {
 
     return createCart;
   } catch (err) {
-    throw new CustomError(400, 'Data Source Error');
+    throw new CustomError(400, `dataSource_Error: ${err.sqlMessage}`);
   }
 };
 
@@ -74,12 +74,10 @@ const removeCart = async (userId, cartId) => {
   await queryRunner.connect();
   await queryRunner.startTransaction();
   try {
-    const removeCart = await queryRunner.query(
+    await queryRunner.query(
       `DELETE FROM carts 
             WHERE user_id = ${userId} and id IN (${cartId})`
     );
-
-    if (!removeCart.affectedRows) throw new CustomError(404, 'cartItem not Delete');
 
     const result = await queryRunner.query(
       `SELECT 
