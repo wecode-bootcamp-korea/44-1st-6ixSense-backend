@@ -46,3 +46,4 @@ const signUp = async (name, account, password, phoneNumber, birthday, gender) =>
 };
 
 module.exports = { getUserByAccount, getUserById, signIn, signUp };
+  

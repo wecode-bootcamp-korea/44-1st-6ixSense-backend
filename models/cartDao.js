@@ -98,7 +98,7 @@ const removeCart = async (userId, cartId) => {
    JOIN (
       SELECT 
           product_id,
-          JSON_ARRAYAGG(image_url) as productImages
+          JSON_ARRAYAGG(image_url) as productImage
       FROM product_images
       GROUP BY product_id
   ) as images ON images.product_id = carts.product_id 
@@ -148,7 +148,7 @@ const modifyCart = async (userId, cartId, quantity) => {
    JOIN (
       SELECT 
           product_id,
-          JSON_ARRAYAGG(image_url) as productImages
+          JSON_ARRAYAGG(image_url) as productImage
       FROM product_images
       GROUP BY product_id
   ) as images ON images.product_id = carts.product_id 

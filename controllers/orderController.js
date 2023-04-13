@@ -15,4 +15,3 @@ const createOrder = catchAsync(async (req, res) => {
 module.exports = {
   createOrder,
 };
-

@@ -9,7 +9,6 @@ Object.freeze(orderStatus);
 
 const createOrder = async (user, totalPrice, carts) => {
   const userPoint = user.userPoint;
-
   if (userPoint < totalPrice) throw new CustomError(409, 'Not Enough Point');
 
   const cartIds = carts.map((carts) => carts.cartId);
