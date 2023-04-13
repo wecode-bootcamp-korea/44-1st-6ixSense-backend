@@ -9,8 +9,8 @@ const getProductList = async (categoryId, sort, limit, offset) => {
       whereCondition = `WHERE products.category_id IN (${categoryId})`;
     }
     const sortList = {
-      priceInASC: 'products.price ASC',
-      priceInDESC: 'products.price DESC',
+      priceInASC: 'discountedPrice ASC',
+      priceInDESC: 'discountedPrice DESC',
     };
     const sortCondition = sortList[sort] || 'products.id';
 
