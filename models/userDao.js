@@ -31,10 +31,10 @@ const getUserById = async (userId) => {
       name,
       account,
       password,
-      phone_number,
+      phone_number as phoneNumber,
       birthday,
       gender,
-      point
+      point as userPoint
       FROM users WHERE id = ?`,
       [userId]
     );
