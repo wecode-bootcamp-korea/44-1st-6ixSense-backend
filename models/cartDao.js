@@ -98,7 +98,7 @@ const removeCart = async (userId, cartId) => {
    JOIN (
       SELECT 
           product_id,
-          JSON_ARRAYAGG(image_url) as productImage
+          JSON_ARRAYAGG(image_url) as productImages
       FROM product_images
       GROUP BY product_id
   ) as images ON images.product_id = carts.product_id 
@@ -109,6 +109,7 @@ const removeCart = async (userId, cartId) => {
 
     return result;
   } catch (err) {
+    console.log(err);
     await queryRunner.rollbackTransaction();
     throw new CustomError(400, 'dataSource_Error');
   } finally {
@@ -148,7 +149,7 @@ const modifyCart = async (userId, cartId, quantity) => {
    JOIN (
       SELECT 
           product_id,
-          JSON_ARRAYAGG(image_url) as productImage
+          JSON_ARRAYAGG(image_url) as productImages
       FROM product_images
       GROUP BY product_id
   ) as images ON images.product_id = carts.product_id 
