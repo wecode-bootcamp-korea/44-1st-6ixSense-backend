@@ -12,7 +12,7 @@ const getCartByUserId = catchAsync(async (req, res) => {
 const insertCart = catchAsync(async (req, res) => {
   const { productId, quantity } = req.body;
   const userId = await req.user.id;
-  console.log(req.body);
+
   if (!productId || !quantity) throw new CustomError(400, 'KEY_ERROR');
 
   await cartService.insertCart(userId, productId, quantity);

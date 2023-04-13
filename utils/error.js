@@ -5,7 +5,7 @@ const catchAsync = (func) => {
 };
 
 const globalErrorHandler = (err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err);
 
   err.statusCode = err.statusCode || 500;
 
@@ -19,7 +19,6 @@ class CustomError extends Error {
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, CustomError);
     }
-
     this.statusCode = statusCode;
     this.message = message;
   }

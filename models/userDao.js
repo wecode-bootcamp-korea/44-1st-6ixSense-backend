@@ -57,7 +57,7 @@ const createUser = async (name, account, hashedPassword, phoneNumber, birthday, 
       [name, account, hashedPassword, phoneNumber, birthday, gender]
     );
   } catch (err) {
-    throw new CustomError(400, 'dataSource_Error');
+    throw new CustomError(400, 'dataSource_Error', ` ${err.sqlMessage}`);
   }
 };
 
