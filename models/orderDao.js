@@ -1,5 +1,6 @@
 const appDataSource = require('./appDataSource');
 const queryRunner = appDataSource.createQueryRunner();
+const { CustomError } = require('../utils/error');
 
 const createOrder = async (userId, statusId, totalPrice, cartId, cartItems) => {
   await queryRunner.connect();
@@ -34,15 +35,14 @@ const createOrder = async (userId, statusId, totalPrice, cartId, cartItems) => {
               WHERE users.id = ${userId} AND users.point > ${totalPrice}`
     );
 
-    await queryRunner.query(`DELETE FROM carts WHERE user_id = ${userId} AND id IN (${cartId})`);
+    await queryRunner.query(`DELETE 
+              FROM carts  
+              WHERE user_id = ${userId} AND id IN (${cartId})`);
 
     await queryRunner.commitTransaction();
   } catch (err) {
-    console.log(err);
     await queryRunner.rollbackTransaction();
-    const error = new Error('appDataSource error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error');
   } finally {
     await queryRunner.release();
   }

@@ -1,4 +1,5 @@
 const appDataSource = require('./appDataSource');
+const { CustomError } = require('../utils/error');
 
 const getUserByAccount = async (account) => {
   try {
@@ -17,9 +18,7 @@ const getUserByAccount = async (account) => {
     );
     return result;
   } catch (err) {
-    const error = new Error('dataSource_Error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
@@ -40,9 +39,7 @@ const getUserById = async (userId) => {
     );
     return result;
   } catch (err) {
-    const error = new Error('dataSource_Error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
@@ -60,10 +57,7 @@ const createUser = async (name, account, hashedPassword, phoneNumber, birthday, 
       [name, account, hashedPassword, phoneNumber, birthday, gender]
     );
   } catch (err) {
-    console.log(err);
-    const error = new Error('appDataSource_Error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error', ` ${err.sqlMessage}`);
   }
 };
 

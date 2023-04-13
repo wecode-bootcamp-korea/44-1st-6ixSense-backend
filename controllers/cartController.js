@@ -1,5 +1,5 @@
 const cartService = require('../services/cartService');
-const { catchAsync } = require('../utils/error');
+const { catchAsync, CustomError } = require('../utils/error');
 
 const getCartByUserId = catchAsync(async (req, res) => {
   const userId = await req.user.id;
@@ -13,13 +13,9 @@ const insertCart = catchAsync(async (req, res) => {
   const { productId, quantity } = req.body;
   const userId = await req.user.id;
 
-  if (!productId || !quantity) {
-    const error = new Error('KEY_ERROR');
-    error.statusCode = 400;
-    throw error;
-  }
+  if (!productId || !quantity) throw new CustomError(400, 'KEY_ERROR');
 
-  const result = await cartService.insertCart(userId, productId, quantity);
+  await cartService.insertCart(userId, productId, quantity);
 
   return res.status(201).json({ message: 'CREATE_CART_SUCCESS' });
 });
@@ -27,6 +23,8 @@ const insertCart = catchAsync(async (req, res) => {
 const removeCart = catchAsync(async (req, res) => {
   const { cartId } = req.query;
   const userId = req.user.id;
+
+  if (!cartId) throw new CustomError(400, 'KEY_ERROR');
 
   const result = await cartService.afterRemoveCartInfo(userId, cartId);
 
@@ -37,11 +35,7 @@ const modifyCart = catchAsync(async (req, res) => {
   const { cartId, quantity } = req.body;
   const userId = await req.user.id;
 
-  if (!cartId || !quantity) {
-    const error = new Error('KEY_ERROR');
-    error.statusCode = 400;
-    throw error;
-  }
+  if (!cartId || !quantity) throw new CustomError(400, 'KEY_ERROR');
 
   const result = await cartService.modifyCart(userId, cartId, quantity);
 

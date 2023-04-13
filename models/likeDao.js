@@ -1,4 +1,5 @@
 const appDataSource = require('./appDataSource');
+const { CustomError } = require('../utils/error');
 
 const createLike = async (userId, productId) => {
   try {
@@ -10,10 +11,7 @@ const createLike = async (userId, productId) => {
       [userId, productId]
     );
   } catch (err) {
-    console.log(err);
-    const error = new Error('INVALID_DATA_INPUT');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
@@ -25,10 +23,7 @@ const deleteLike = async (userId, productId) => {
       [userId, productId]
     );
   } catch (err) {
-    console.log(err);
-    const error = new Error('INVALID_DATA_INPUT');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 

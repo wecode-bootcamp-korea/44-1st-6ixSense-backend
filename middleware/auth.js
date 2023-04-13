@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const userService = require('../services/userService');
+const { CustomError } = require('../utils/error');
 
 const checkLogInToken = async (req, res, next) => {
   try {

@@ -1,4 +1,5 @@
 const appDataSource = require('./appDataSource');
+const { CustomError } = require('../utils/error');
 
 const getProductList = async (categoryId, sort, limit, offset) => {
   try {
@@ -8,8 +9,8 @@ const getProductList = async (categoryId, sort, limit, offset) => {
       whereCondition = `WHERE products.category_id IN (${categoryId})`;
     }
     const sortList = {
-      priceInASC: 'products.price ASC',
-      priceInDESC: 'products.price DESC',
+      priceInASC: 'discountedPrice ASC',
+      priceInDESC: 'discountedPrice DESC',
     };
     const sortCondition = sortList[sort] || 'products.id';
 
@@ -44,9 +45,7 @@ const getProductList = async (categoryId, sort, limit, offset) => {
     );
     return productList;
   } catch (err) {
-    const error = new Error('INVALID_DATA_SELECT');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
@@ -74,10 +73,7 @@ const getProduct = async (productId) => {
       [productId]
     );
   } catch (err) {
-    console.log(err);
-    const error = new Error('appDataSource error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
@@ -85,8 +81,7 @@ const checkProductId = async (productId) => {
   try {
     const [result] = await appDataSource.query(
       `SELECT EXISTS
-      (
-        SELECT
+      (SELECT
               id
               FROM products
               WHERE id = ?) as isProduct`,
@@ -94,10 +89,7 @@ const checkProductId = async (productId) => {
     );
     return !!parseInt(result.isProduct);
   } catch (err) {
-    console.log(err);
-    const error = new Error('appDataSource error');
-    error.statusCode = 400;
-    throw error;
+    throw new CustomError(400, 'dataSource_Error');
   }
 };
 
