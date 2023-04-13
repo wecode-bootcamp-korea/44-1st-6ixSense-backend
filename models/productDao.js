@@ -85,7 +85,8 @@ const checkProductId = async (productId) => {
   try {
     const [result] = await appDataSource.query(
       `SELECT EXISTS
-      (SELECT
+      (
+        SELECT
               id
               FROM products
               WHERE id = ?) as isProduct`,
@@ -93,6 +94,7 @@ const checkProductId = async (productId) => {
     );
     return !!parseInt(result.isProduct);
   } catch (err) {
+    console.log(err);
     const error = new Error('appDataSource error');
     error.statusCode = 400;
     throw error;
