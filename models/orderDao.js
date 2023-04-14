@@ -1,8 +1,9 @@
 const appDataSource = require('./appDataSource');
-const queryRunner = appDataSource.createQueryRunner();
 const { CustomError } = require('../utils/error');
 
 const createOrder = async (userId, statusId, totalPrice, cartId, cartItems) => {
+  const queryRunner = appDataSource.createQueryRunner();
+
   await queryRunner.connect();
   await queryRunner.startTransaction();
   try {
