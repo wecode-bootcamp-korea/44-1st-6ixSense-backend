@@ -1,4 +1,4 @@
-# Team 6ixSense - 6ixSense-osulloc Clone coding
+# Team 6ixSense -osulloc Clone coding
 
 
 
