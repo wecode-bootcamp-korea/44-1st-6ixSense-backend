@@ -1,6 +1,6 @@
 # Team 6ixSense -osulloc Clone coding
-
-
+<br />
+프로젝트 기간: 2023.04.03 ~ 2023.04.14
 
 ## FrontEnd
 
