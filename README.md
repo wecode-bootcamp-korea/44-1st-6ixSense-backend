@@ -33,8 +33,8 @@
 
 
 1. 회원가입, 로그인 , 인증 (원종)
-2. productList 네비게이션, 상품 필터링 (세익)
-3. productDetailPage 네비게이션 (석준)
+2. productList 페이지네이션, 상품 필터링 (세익)
+3. productDetailPage 페이지네이션 (석준)
 4. 좋아요 API (석준)
 5. 장바구니 CRUD API (원종)
 6. 주문 API (석준)
