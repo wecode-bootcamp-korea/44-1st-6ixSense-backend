@@ -62,13 +62,14 @@
 ![main_2 (1)](https://user-images.githubusercontent.com/123849268/232360878-481bf06a-b1a6-46bf-a0dd-bdd46126256b.gif)
 ![listgif](https://user-images.githubusercontent.com/123849268/232360953-d8050f34-fbae-4f7a-97a3-cad522116124.gif)
 
-
 1. 메인 페이지의 오늘의 추천 상품에 추천상품과 할인된 가격의 데이터를 만들어 Client가 받을 수 있게 연결
 2. 상품의 가격을 정렬하여 낮은 가격순, 높은 가격순으로 선택할 수 있는 api구현
 3. 상품의 카테고리별로 필터링하여 상품을 선택할 수 있도록 구현
 4. 상품 이미지를 선택할 시 Product Image와 Hover Image를 함께 제공하기 위해, 상품 정보에 2개의 이미지 URL을 추가하고 클라이언트 측에서 이를 구현
 5. LIMIT와 OFFSET으로 페이지네이션을 적용하여 페이지 이동 구현
 6. 상품 가격 외 할인된 가격도 함께 계산 할 수 있도록 쿼리문에서 조건문을 사용하여 구현
+
+<br>
 
 # productDetailPage 페이지네이션 (석준)
  ![상품 디테일 (1)](https://user-images.githubusercontent.com/120084509/232380947-5492f3c1-cae6-4177-9572-ad3a87a75dd6.gif)
@@ -77,10 +78,27 @@
 1. 상품들의 가격들 중 할인이 있는 상품이 있다면 할인율과 함께 할인이 적용된 가격을 클라이언트에게 반환
 2. 상품 상세페이지인 만큼 상품의 이름부터 시작해서 가격, 정보, 이미지 등 데이터베이스에 있는 정보들을 클라이언트로 반환
 
+<br>
+
 # 좋아요 API (석준)
 
 1. 로그인한 상태에서 좋아요 기능을 누르면 생성
 2. 한번 더 누른다면 삭제 기능 구현
+
+<br>
+
+# 장바구니 CRUD API (원종)
+
+![장바구니_선택체크 (1)](https://user-images.githubusercontent.com/120084509/232398090-45afe96d-5677-433b-b32d-108bfd3b014b.gif)
+
+![장바구니_전체선택_삭제 (1)](https://user-images.githubusercontent.com/120084509/232398104-2d7794ae-551d-425a-8b3b-b6d3338fe754.gif)
+
+![장바구니_선택삭제 (1)](https://user-images.githubusercontent.com/120084509/232398127-d1e0a226-254e-49c0-834c-a34916ae5d8c.gif)
+
+1.
+
+<br>
+
 
 # 주문 & 결제 API
 
