@@ -104,7 +104,7 @@
 <br>
 
 
-# 주문 & 결제 API
+# 주문 & 결제 API (석준)
 
 ![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/120084509/232380925-f400bdf0-0a9f-4b70-8756-7ecf1d38eec1.gif)
 
